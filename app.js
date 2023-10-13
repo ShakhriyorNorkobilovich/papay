@@ -1,11 +1,7 @@
-// console.log('Web serverni boshlash');
+console.log('Web serverni boshlash');
 const express = require("express");
 const app = express();
-
-
-// MongoDB chaqirish
-const db = require("./server").db();
-const mongodb = require("mongodb");
+const router = require("./router");
 
 
 // 1: Kirish 
@@ -15,9 +11,12 @@ app.use(express.urlencoded({extended: true}));
 
 // 2 Session 
 
-// 3 View code
+// 3 View codex
 app.set("views", "views");
 app.set("view engine", "ejs");
 
-// 4 Routing code                                                                                
+// 4 Routing code  
+
+app.use("/", router);
+
 module.exports = app;
