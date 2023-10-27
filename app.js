@@ -33,7 +33,7 @@ app.use(
 app.use(function(req, res, next){
 res.locals.member = req.session.member;
 next();
-})
+});
 
 
 // 3 View codex
