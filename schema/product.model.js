@@ -8,7 +8,9 @@ const {
 const Schema = mongoose.Schema;
 
 const productSchema = new mongoose.Schema({
-    product_name: {type: String, required: true},
+    product_name: {
+        type: String, 
+        required: true},
     product_collection: {
         type: String, 
         required: true, 
