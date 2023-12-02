@@ -62,12 +62,12 @@ class Member {
           console.log("member: :", member);
           if (member) {
             await this.viewChosenItemByMember(member, id, "member");
-            // condition if not seen before
           }
           const result = await this.memberModel
             .aggregate([
               { $match: { _id: id, mb_status: "ACTIVE" } },
               { $unset: "mb_password" },
+              //todo liked the chosen member
             ])
             .exec();
     
@@ -83,7 +83,7 @@ class Member {
           view_ref_id = shapeIntoMongooseObjectId(view_ref_id);
           const mb_id = shapeIntoMongooseObjectId(member._id);
           const view = new View(mb_id);
-          // validation needed
+          // validation 
           const isValid = await view.validateChosenTarger(view_ref_id, group_type);
           assert.ok(isValid, Definer.general_err2);
     
