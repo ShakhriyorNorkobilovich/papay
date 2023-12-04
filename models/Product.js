@@ -38,6 +38,8 @@ class Product {
     }
   }
 
+
+  
   async getChosenProductData( member, id) {
     try{
         const auth_mb_id = shapeIntoMongooseObjectId(member?. _id);

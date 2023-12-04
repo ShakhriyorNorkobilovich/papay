@@ -16,6 +16,7 @@ productController.getAllProducts = async (req, res) => {
     }
   };
 
+
 productController.getChosenProduct = async (req, res) => {
     try{
         console.log("GET: cont/getChosenProduct");
@@ -30,7 +31,9 @@ productController.getChosenProduct = async (req, res) => {
 }
 
 
-
+/******************************************************
+ *            BSSR RELATED METHODS                    *
+ ******************************************************/
 
 
 productController.addNewProduct = async(req, res) => {

@@ -54,8 +54,9 @@ memberController.login = async (req, res) => {
 
 memberController.logout = (req, res) => {
     console.log("GET cont/logout");
-    res.send("logout sahifasidasiz");
-};
+    res.cookie("access_token", null, { maxAge: 0, httpOnly: true });
+    res.json({ state: "succeed", data: "logout successfully!" });
+  };
 
 memberController.createToken = (result) => {
     try{
@@ -96,8 +97,10 @@ memberController.getChosenMember = async (req, res) => {
     try {
       console.log("GET cont/getChosenMember");
       const id = req.params.id;
+
       const member = new Member();
       const result = await member.getChosenMemberData(req.member, id);
+
       res.json({ state: "succeed", data: result });
     } catch (err) {
       console.log(`ERROR, cont/getChosenMember, ${err.message}`);

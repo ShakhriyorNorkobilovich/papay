@@ -3,6 +3,7 @@ const Definer = require("../lib/mistake");
 const assert = require("assert");
 const bcrypt = require('bcryptjs');
 const { shapeIntoMongooseObjectId } = require("../lib/config");
+const View = require("./View");
 
 class Member {
     constructor(){
@@ -59,7 +60,7 @@ class Member {
     async getChosenMemberData(member, id) {
         try {
           id = shapeIntoMongooseObjectId(id);
-          console.log("member: :", member);
+          console.log("member:::", member);
           if (member) {
             await this.viewChosenItemByMember(member, id, "member");
           }
