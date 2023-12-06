@@ -3,7 +3,7 @@ const Member = require("../models/Member");
 const Product = require("../models/Product");
 const assert = require("assert");
 const Restaurant = require("../models/Restaurant");
-const { response } = require("express");
+// const { response } = require("express");
 
 let restaurantController = module.exports;
 
@@ -17,7 +17,25 @@ restaurantController.getRestaurants = async (req, res) =>{
 
 
     }   catch(err) {
-        console.log(`ERROR, cont/home, ${err.message}`);
+        console.log(`ERROR, cont/getRestaurants, ${err.message}`);
+        res.json({state: 'fail', message: err.message});
+    }
+};
+
+restaurantController.getChosenRestaurant = async (req, res) => {
+    try {
+
+        console.log("GET: cont/getChosenRestaurant");
+        const id = req.params.id, 
+            restaurant = new Restaurant(),
+            result = await restaurant.getChosenRestaurantData(req.member, id);
+
+    
+
+
+        res.json({state: "success", data: result});
+    }   catch (err) {
+        console.log(`ERROR, cont/getChosenRestaurant, ${err.message}`);
         res.json({state: 'fail', message: err.message});
     }
 }
