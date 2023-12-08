@@ -52,8 +52,6 @@ class Restaurant {
         try{
             id = shapeIntoMongooseObjectId(id);
 
-
-
         if(member) {
             const member_obj = new Member();
             await member_obj.viewChosenItemByMember(member, id, "member");
