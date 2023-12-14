@@ -37,7 +37,7 @@ communityController.getMemberArticles = async (req, res) => {
     
     const mb_id = req.query.mb_id !== "none" ? req.query.mb_id : req.member?._id;
     assert.ok(mb_id, Definer.article_err1);
-    
+
     const result = await community.getMemberArticlesData(
       req.member,
       mb_id,
@@ -50,3 +50,30 @@ communityController.getMemberArticles = async (req, res) => {
     res.json({ state: "fail", message: err.message });
   }
 };
+
+communityController.getArticles = async (req, res) => {
+    try {
+      console.log("GET: cont/getArticles");
+      const community = new Community(),
+      result = await community.getArticlesData(req.member, req.query);
+  
+      res.json({ state: "success", data: result });
+    } catch (err) {
+      console.log(`ERROR, cont/getArticles, ${err.message} `);
+      res.json({ state: "fail", message: err.message });
+    }
+  };
+
+  communityController.getChosenArticle = async (req, res) => {
+    try {
+      console.log("GET: cont/getChosenArticle");
+      const art_id = req.params.art_id,
+      community = new Community(),
+      result = await community.getChosenArticleData(req.member, art_id);
+  
+      res.json({ state: "success", data: result });
+    } catch (err) {
+      console.log(`ERROR, cont/getChosenArticle, ${err.message} `);
+      res.json({ state: "fail", message: err.message });
+    }
+  };
