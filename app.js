@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const router = require("./router");
 const router_bssr = require("./router_bssr");
+const cors = require('cors');
 const cookieParser = require("cookie-parser");
 
 let session = require("express-session");
@@ -15,8 +16,13 @@ const store = new MongoDbStore({
 
 // 1: Kirish kodlari.
 app.use(express.static("public"));
+app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false })); //formdan post qilingan narsalarni express qabul qiladi.
+app.use(cors({
+  credentials: true,
+  origin: true,
+}));
 app.use(cookieParser());
 
 // 2 Session larga bog'liq bo'lgan codelar yoziladi Requestni ichida sessionlarni hosil qilib beradi.
