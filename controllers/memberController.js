@@ -7,12 +7,10 @@ const Definer = require("../lib/mistake");
 
 memberController.signup = async (req, res) => {
     try{
-        console.log("Post: cont/signup");
+        console.log("POST: cont/signup");
         const data = req.body,
         member = new Member(),
         new_member = await member.signupData(data);
-
-        
         const token = memberController.createToken(new_member);
         
         res.cookie('access_token', token, {
@@ -30,7 +28,7 @@ memberController.signup = async (req, res) => {
 
 memberController.login = async (req, res) => {
     try{
-        console.log("Post: cont/login");
+        console.log("POST: cont/login");
         const data = req.body,
         member = new Member(), 
         result = await member.loginData(data);

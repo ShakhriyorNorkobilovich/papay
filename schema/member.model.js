@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { 
     member_type_enums, 
     member_status_enums, 
-    ordenary_enums 
+    ordinary_enums 
 } = require("../lib/config");
 
 const memberSchema = new mongoose.Schema({
@@ -69,7 +69,7 @@ const memberSchema = new mongoose.Schema({
         required: false,
         default: "N",
         enum: {
-            values: ordenary_enums,
+            values: ordinary_enums,
             message: "{VALUE} is not among permitted values"
         },
     },
