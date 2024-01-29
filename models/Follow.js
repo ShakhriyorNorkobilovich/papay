@@ -88,11 +88,11 @@ class Follow {
     }
   }
 
-  async getMemberFollowingsData(inquiry) {
+  async getMemberFollowingsData(inquery) {
     try {
-      const subscriber_id = shapeIntoMongooseObjectId(inquiry.mb_id),
-        page = inquiry.page * 1,
-        limit = inquiry.limit * 1;
+      const subscriber_id = shapeIntoMongooseObjectId(inquery.mb_id),
+        page = inquery.page * 1,
+        limit = inquery.limit * 1;
 
       const result = await this.followModel
         .aggregate([
@@ -118,11 +118,11 @@ class Follow {
     }
   }
 
-  async getMemberFollowersData(member, inquiry) {
+  async getMemberFollowersData(member, inquery) {
     try {
-      const follow_id = shapeIntoMongooseObjectId(inquiry.mb_id),
-        page = inquiry.page * 1,
-        limit = inquiry.limit * 1;
+      const follow_id = shapeIntoMongooseObjectId(inquery.mb_id),
+        page = inquery.page * 1,
+        limit = inquery.limit * 1;
 
       let aggregateQuery = [
         { $match: { follow_id: follow_id } },
@@ -140,7 +140,7 @@ class Follow {
         { $unwind: "$subscriber_member_data" }
       ];
 
-      if (member && member._id === inquiry.mb_id) {
+      if (member && member._id === inquery.mb_id) {
         aggregateQuery.push(lookup_auth_member_following(follow_id, "follows"));
       }
       const result = await this.followModel.aggregate(aggregateQuery).exec();

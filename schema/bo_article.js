@@ -1,11 +1,10 @@
+// SCHEMA MODEL
 const mongoose = require("mongoose");
 const {
   board_id_enum_list,
   board_article_status_enum_list,
 } = require("../lib/config");
 const Schema = mongoose.Schema;
-
-
 const boArticleSchema = new mongoose.Schema(
   {
     art_subject: { type: String, required: true },
@@ -32,7 +31,7 @@ const boArticleSchema = new mongoose.Schema(
     art_views: { type: Number, required: false, default: 0 },
     mb_id: { type: Schema.Types.ObjectId, ref: "Member", required: true },
   },
-  { timestamps: true } 
+  { timestamps: true } //createdAt, updatedAt
 );
 
 module.exports = mongoose.model("BoArticle", boArticleSchema);

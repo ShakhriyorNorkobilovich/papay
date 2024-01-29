@@ -28,12 +28,12 @@ class Community {
     }
   }
 
-  async getMemberArticlesData(member, mb_id, inquiry) {
+  async getMemberArticlesData(member, mb_id, inquery) {
     try {
       mb_id = shapeIntoMongooseObjectId(mb_id);
       const auth_mb_id = shapeIntoMongooseObjectId(member?._id),
-        page = inquiry["page"] ? inquiry["page"] * 1 : 1,
-        limit = inquiry["limit"] ? inquiry["limit"] * 1 : 5;
+        page = inquery["page"] ? inquery["page"] * 1 : 1,
+        limit = inquery["limit"] ? inquery["limit"] * 1 : 5;
       const result = await this.boArticleModel
         .aggregate([
           { $match: { mb_id: mb_id, art_status: "active" } },
@@ -59,24 +59,24 @@ class Community {
     }
   }
 
-  async getArticlesData(member, inquiry) {
+  async getArticlesData(member, inquery) {
     try {
       const auth_mb_id = shapeIntoMongooseObjectId(member?._id);
       let matches =
-        inquiry.bo_id === "all" 
+        inquery.bo_id === "all" 
           ? { bo_id: { $in: board_id_enum_list }, art_status: "active" }
-          : { bo_id: inquiry.bo_id, art_status: "active" };
-      inquiry.limit *= 1;
-      inquiry.page *= 1;
-      const sort = inquiry.order
-        ? { [`${inquiry.order}`]: -1 }
+          : { bo_id: inquery.bo_id, art_status: "active" };
+      inquery.limit *= 1;
+      inquery.page *= 1;
+      const sort = inquery.order
+        ? { [`${inquery.order}`]: -1 }
         : { createdAt: -1 };
       const result = await this.boArticleModel
         .aggregate([
           { $match: matches },
           { $sort: sort },
-          { $skip: (inquiry.page - 1) * inquiry.limit },
-          { $limit: inquiry.limit },
+          { $skip: (inquery.page - 1) * inquery.limit },
+          { $limit: inquery.limit },
           {
             $lookup: {
               from: "members",
