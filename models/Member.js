@@ -111,9 +111,6 @@ class Member {
         }
       }
 
-
-
-
       async likeChosenItemByMember(member, like_ref_id, group_type) {
         const mb_id = shapeIntoMongooseObjectId(member._id);
         like_ref_id = shapeIntoMongooseObjectId(like_ref_id);
@@ -136,6 +133,34 @@ class Member {
           like_status: doesExist ? 0 : 1,
         };
         return result;
+      }
+
+
+      async updateMemberData(id, data, image) {
+        try {
+          const mb_id = shapeIntoMongooseObjectId(id);
+          id = shapeIntoMongooseObjectId(id);
+          let params = {
+            mb_nick: data.mb_nick,
+            mb_phone: data.mb_phone,
+            mb_address: data.mb_address,
+            mb_description: data.mb_description,
+            mb_image: image ? image.path.replace(/\\/g, "/") : null,
+          };
+          console.log("params:::", params);
+          for (let prop in params) if (!params[prop]) delete params[prop];
+          const result = await this.memberModel
+            .findOneAndUpdate({ _id: mb_id }, params, {
+              runValidators: true,
+              lean: true,
+              returnDocument: "after",
+            })
+            .exec();
+          assert.ok(result, Definer.general_err1);
+          return result;
+        } catch (err) {
+          throw err;
+        }
       }
 
       
